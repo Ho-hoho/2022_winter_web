@@ -1,6 +1,7 @@
 /node_modules
 /build
 /ffmpeg-5.0-full_build
+/uploads
 dev.js
 
 
