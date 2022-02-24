@@ -2,6 +2,7 @@ import React, { useReducer, useState } from 'react'
 import { Comment, Avatar, Button, Input } from 'antd'
 import Axios from 'axios';
 import { useSelector } from 'react-redux'
+import LikeDislikes from './LikeDislikes';
 
 const { TextArea } = Input;
 
@@ -31,6 +32,8 @@ function SingleComment(props) {
                     props.refreshFunction(response.data.result)
                     setCommentValue("")
                     setOpenReply(false)
+                    //대댓글 달았을 때 댓글이 바로 보일 수 있게 하려면
+                    //여기서 ReplyComment.js의 OpenReplyComments의 state를 수정해야함
                 } else {
                     alert("코멘트를 저장하지 못했습니다")
                 }
@@ -38,7 +41,8 @@ function SingleComment(props) {
     }
 
     const actions = [
-        <span onClick={onClickReplyOpen} key="comment-basic-reply-to"> Reply to</span>
+        <LikeDislikes userId={localStorage.getItem('userId')} commentId={props.comment._id} />
+        ,<span onClick={onClickReplyOpen} key="comment-basic-reply-to"> Reply to</span>
     ]
 
     return (
@@ -62,7 +66,6 @@ function SingleComment(props) {
                     <button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</button>
                 </form>
             }
-
         </div>
     )
 }

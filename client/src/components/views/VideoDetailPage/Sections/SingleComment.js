@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {Comment,Avatar,Button,Input} from 'antd'
 import {useSelector} from 'react-redux'
 import Axios from 'axios';
-
+import LikeDislikes from './LikeDislikes';
 const { TextArea } = Input;
 
 function SingleComment(props) {
@@ -37,12 +37,12 @@ function SingleComment(props) {
             } else {
                 alert("코멘트를 저장하지 못했습니다")
             }
-        })
-     
+        })    
     }
 
   const actions = [
-      <span onClick={onClickReplyOpen} key="comment-basic-reply-to"> Reply to</span>
+    <LikeDislikes userId={localStorage.getItem('userId')} commentId={props.comment._id} />
+    ,<span onClick={onClickReplyOpen} key="comment-basic-reply-to"> Reply to</span>
   ]
   
   return (
@@ -50,7 +50,7 @@ function SingleComment(props) {
         <Comment
             actions={actions}
             author={props.comment.writer.name}
-            avatar={<Avatar src={props.comment.writer.image} alt/>}
+            avatar={<Avatar src={props.comment.writer.image} alt />}
             content={<p>{props.comment.content}</p>}
         />
 
@@ -58,15 +58,14 @@ function SingleComment(props) {
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
             <textarea
               style={{ width: '100%', borderRadius: '5px' }}
-              onChange ={onHandleChange}
-              value ={CommentValue}
+              onChange={onHandleChange}
+              value={CommentValue}
               placeholder="코멘트를 작성해주세요"
             />
             <br />
             <button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>Submit</button>
           </form>
         }
-
     </div>
   )
 }
